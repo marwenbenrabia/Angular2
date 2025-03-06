@@ -1,0 +1,24 @@
+<p>Gestion des taches </p>
+
+<div class ="row">
+    <input type="text" [(ngModel)]="tache"  placeholder="Ajouter une tache"  >
+    <button (click) = "ajouterTaches()" style="margin-left: 10px;" >Valider</button>
+</div>
+
+<ul *ngIf="taches.length == 0 "> Aucune tache à afficher </ul>
+
+<ul  *ngIf="taches.length > 0 " >
+    <li *ngFor="let t of taches, let i = index " >
+        <div [ngStyle]="changerCouleur(i)" [ngClass] = " {'maBarre' :  t.checkedTache  , 'maNormal': !  t.checkedTache } ">
+            {{ t.titreTache | capitalizePipe }} 
+            <div  *ngIf="t.checkedTache  == true; else tacheEnCours ">  
+               <p >  Tâches terminées  ✅   </p>
+            </div > 
+            <ng-template #tacheEnCours>
+                <p >  Tâches non terminées  ❌ </p>
+            </ng-template> 
+        </div>
+         <button (click)="supprimerTaches(i)"> Supprimer</button>
+       <button (click)="modiferTaches(i)" style="margin-left: 10px;"> modifier</button>
+    </li>
+</ul>
